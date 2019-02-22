@@ -13,7 +13,7 @@
          <view class="floor-head">{{subItem.cat_name}}</view>
          <view class="floor-body">
            <block v-for="(lastItem,lastIndex) in subItem.children" :key="lastIndex">
-            <view class="floor-body-item">
+            <view class="floor-body-item" @tap="goTolist">
               <image :src="lastItem.cat_icon"></image>
               <view>{{lastItem.cat_name}}</view>
             </view>
@@ -28,6 +28,7 @@
 <script>
 import search from '@/components/Search'
 import request from '@/utils/request'
+import { setTimeout } from 'timers';
 export default {
   data () {
     return {
@@ -48,9 +49,18 @@ export default {
     })
   },
   methods: {
+    // 跳转分类页
+    goTolist(){
+      wx.navigateTo({
+        url:'/pages/goods_list/main'
+      })
+    },
     handleactive(index){
       this.tabIndex = index;
-      this.rightData = this.cates[index]
+      this.rightData = []
+      setTimeout(() => {
+        this.rightData = this.cates[index]
+      },0)
     }
   }
 }
